@@ -4,9 +4,19 @@ var numberOfButtons = document.querySelectorAll(".drum").length;
 for (i = 0; i < numberOfButtons; i++) {
   document.querySelectorAll("button")[i].addEventListener("click", function () {
     var buttonInnerHTML = this.innerHTML;
+
     playSound(buttonInnerHTML);
+
+    buttonAnimation(buttonInnerHTML);
   });
 }
+
+// Detecting keyboard press
+
+document.addEventListener("keydown", function (event) {
+  playSound(event.key);
+  buttonAnimation(event.key);
+});
 
 function playSound(key) {
   switch (key) {
@@ -50,8 +60,11 @@ function playSound(key) {
   }
 }
 
-// Detecting keyboard press
+function buttonAnimation(currentKey) {
+  var activeButton = document.querySelector("." + currentKey);
+  activeButton.classList.add("pressed");
 
-document.addEventListener("keydown", function (event) {
-  playSound(event.key);
-});
+  setTimeout(function () {
+    activeButton.classList.remove("pressed");
+  }, 100);
+}
